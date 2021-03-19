@@ -1,0 +1,53 @@
+from selenium import webdriver
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
+import time
+
+driver = webdriver.Chrome(r'C:\Users\Lucas\Downloads\chromedriver.exe')
+
+driver.get("https://www.google.com")
+# search_box = driver.find_element_by_name('q')
+# search_box.send_keys('teste')
+# search_box.submit()
+
+# open a link in a new window
+actions = ActionChains(driver)
+#about = driver.find_element_by_link_text('Sobre')
+about = driver.execute_script("window.open()")
+actions.key_down(Keys.CONTROL).click(about).key_up(Keys.CONTROL).perform()
+
+driver.switch_to.window(driver.window_handles[-1])
+driver.get("https://www.google.com")
+
+#time.sleep(10)
+busca = driver.find_element_by_name('q')
+busca.send_keys("stocks")
+busca.submit()
+busca= driver.find_element_by_class_name("hide-focus-ring").click()
+driver.close()
+
+
+driver.switch_to.window(driver.window_handles[-1])
+search_box = driver.find_element_by_name('q')
+search_box.send_keys('fundos')
+search_box.submit()
+
+# actions = ActionChains(driver)
+# #about = driver.find_element_by_link_text('Sobre')
+# about = driver.execute_script("window.open()")
+# actions.key_down(Keys.CONTROL).click(about).key_up(Keys.CONTROL).perform()
+# driver.switch_to.window(driver.window_handles[-1])
+# driver.get("https://www.google.com")
+# #time.sleep(10)
+# busca = driver.find_element_by_name('q')
+# busca.send_keys("euro")
+# busca.submit()
+# busca= driver.find_element_by_class_name("hide-focus-ring").click()
+# driver.close()
+#
+# driver.switch_to.window(driver.window_handles[-1])
+# search_box = driver.find_element_by_name('q')
+# search_box.clear()
+# search_box.send_keys('libra')
+# search_box.submit()
+# busca= driver.find_element_by_xpath("//*[@data-hveid='CAEQBA']").click()
