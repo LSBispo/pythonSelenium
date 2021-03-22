@@ -1,0 +1,67 @@
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support;
+using OpenQA.Selenium.Support.UI;
+using System;
+using System.Threading;
+
+
+namespace Hello_World
+{
+    class Program
+    {
+        
+
+        static void Main(string[] args)
+        {
+          
+            IWebDriver driver = new ChromeDriver(@"C:\Users\Lucas\Downloads");
+            
+
+            // ABRIR O CHROME E PESQUISAR NA ABA 0 E CLICAR NO PRIMERO LINK
+            driver.Navigate().GoToUrl("https://www.google.com");
+            Console.WriteLine("ANTES DO CLICK\n");
+            Console.WriteLine("\njanelas abertas selenium "  + driver.WindowHandles.Count);
+            driver.FindElement(By.Name("q")).SendKeys("dolar");
+            Thread.Sleep(100);
+            driver.FindElement(By.Name("btnK")).Click();
+            driver.FindElement(By.XPath("/html/body/div[7]/div/div[9]/div[1]/div/div[2]/div[2]/div/div/div/div[1]/div/div[1]/a/h3")).Click();
+            foreach (var item in driver.WindowHandles)
+            {
+                Console.WriteLine("iTEM= " + item);
+            }
+            Console.WriteLine("Current window handle " + driver.CurrentWindowHandle);
+            Thread.Sleep(2000);
+
+
+            // ABRIR O ABA 1 E PESQUISAR
+            ((IJavaScriptExecutor)driver).ExecuteScript("window.open('https://www.google.com');");
+            Console.WriteLine("\njanelas abertas selenium " + driver.WindowHandles.Count);
+            foreach (var item in driver.WindowHandles)
+            {
+                Console.WriteLine("iTEM= " + item);
+            }
+            driver.SwitchTo().Window(driver.WindowHandles[1]);
+            driver.FindElement(By.Name("q")).SendKeys("teste de entrada");
+            Thread.Sleep(100);
+            driver.FindElement(By.ClassName("gNO89b")).Click();
+            Thread.Sleep(2000);
+            Console.WriteLine("Current window handle " + driver.CurrentWindowHandle);
+            Thread.Sleep(2000);
+            driver.Close();
+
+
+            // ABA 0 volta para o google
+            Thread.Sleep(2000);
+            driver.SwitchTo().Window(driver.WindowHandles[0]);
+            driver.Navigate().GoToUrl("https://www.google.com");
+            Thread.Sleep(2000);
+
+
+
+
+
+
+        }
+    }
+}
